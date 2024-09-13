@@ -7,7 +7,7 @@
 }
 
 .results-title {
-  @apply text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center text-text-dark;
+  @apply text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center text-textDark;
 }
 
 .results-grid {
@@ -19,7 +19,7 @@
 }
 
 .results-subsection-title {
-  @apply text-xl md:text-2xl font-bold mb-4 text-text-dark;
+  @apply text-xl md:text-2xl font-bold mb-4 text-textDark;
 }
 
 .results-subsection-grid {

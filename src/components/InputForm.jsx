@@ -1,34 +1,39 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { defaultValues } from '../config/defaultValues';
 
 function InputForm({ onCalculate }) {
   const [formData, setFormData] = useState({
     numStores: '',
     numEmployees: '',
-    hourlySalary: ''
+    hourlySalary: '',
+    cactusLicenseCost: defaultValues.cactusAiMonthlyCostPerStore.toString()
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    // Only allow numeric input
+    const numericValue = value.replace(/[^0-9]/g, '');
+    setFormData(prevData => ({ ...prevData, [name]: numericValue }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const numStores = parseFloat(formData.numStores);
-    const numEmployees = parseFloat(formData.numEmployees);
-    const hourlySalary = parseFloat(formData.hourlySalary);
+    const numStores = parseInt(formData.numStores, 10);
+    const numEmployees = parseInt(formData.numEmployees, 10);
+    const hourlySalary = parseInt(formData.hourlySalary, 10);
+    const cactusLicenseCost = parseInt(formData.cactusLicenseCost, 10);
 
-    if (numStores <= 0 || numEmployees <= 0 || hourlySalary <= 0) {
-      alert("All input values must be greater than zero.");
+    if (numStores <= 0 || numEmployees <= 0 || hourlySalary <= 0 || cactusLicenseCost < 0) {
+      alert("All input values must be greater than zero (Cactus License Cost can be zero).");
       return;
     }
 
-    onCalculate({ numStores, numEmployees, hourlySalary });
+    onCalculate({ numStores, numEmployees, hourlySalary, cactusLicenseCost });
   };
 
   return (
-    <section className="py-12 md:py-16 bg-secondary">
+    <section className="py-20 bg-gray-800">
       <div className="container mx-auto px-4">
         <motion.form 
           id="roi-input-form"
@@ -36,30 +41,30 @@ function InputForm({ onCalculate }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           onSubmit={handleSubmit} 
-          className="max-w-lg mx-auto bg-white p-6 md:p-8 rounded-lg shadow-md"
+          className="max-w-lg mx-auto bg-primary p-8 rounded-lg shadow-lg"
         >
-          <h3 className="text-xl md:text-2xl font-bold mb-6 text-center text-text-dark">Enter ROI Details</h3>
+          <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center text-textLight">Enter ROI Details</h2>
           {Object.entries(formData).map(([key, value], index) => (
             <motion.div 
               key={key} 
-              className="mb-4 md:mb-6"
+              className="mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <label htmlFor={key} className="block text-text-dark font-bold mb-2 capitalize">
-                {key.replace(/([A-Z])/g, ' $1').trim()}
+              <label htmlFor={key} className="label capitalize">
+                {key === 'cactusLicenseCost' ? 'Cactus License Cost (per store per month)' : key.replace(/([A-Z])/g, ' $1').trim()}
               </label>
               <input
-                type="number"
+                type="text"
                 id={key}
                 name={key}
                 value={value}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent transition-colors duration-200 text-text-dark"
+                className="input"
                 required
-                min="0"
-                step={key === 'hourlySalary' ? '0.01' : '1'}
+                pattern="^[0-9]+$"
+                title="Please enter a whole number"
               />
             </motion.div>
           ))}
@@ -67,7 +72,7 @@ function InputForm({ onCalculate }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit" 
-            className="w-full bg-accent hover:bg-opacity-90 text-text-dark font-bold py-2 md:py-3 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent"
+            className="btn btn-primary w-full text-lg"
           >
             Calculate ROI
           </motion.button>

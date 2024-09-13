@@ -14,12 +14,12 @@ const formatPercentage = (value) => {
 };
 
 const formatNumber = (value) => {
-  return value.toFixed(1);
+  return value.toFixed(2);
 };
 
 export function calculateROI(inputData) {
   try {
-    const { numStores, numEmployees, hourlySalary } = inputData;
+    const { numStores, numEmployees, hourlySalary, cactusLicenseCost } = inputData;
     
     if (!numStores || !numEmployees || !hourlySalary) {
       throw new Error('Invalid input data: All fields are required');
@@ -41,7 +41,6 @@ export function calculateROI(inputData) {
       minutesSavedPerSkuSearch,
       initialSetupCostPerStore,
       annualDomainMaintenancePerStore,
-      cactusAiMonthlyCostPerStore,
       cloudCostsPercentage
     } = defaultValues;
 
@@ -53,7 +52,7 @@ export function calculateROI(inputData) {
     // Post-Implementation Costs
     const initialSetupCost = initialSetupCostPerStore * numStores;
     const annualDomainMaintenanceCost = annualDomainMaintenancePerStore * numStores;
-    const cactusAiAnnualCost = cactusAiMonthlyCostPerStore * 12 * numStores;
+    const cactusAiAnnualCost = cactusLicenseCost * 12 * numStores;
     const cloudCosts = cactusAiAnnualCost * cloudCostsPercentage;
     const totalAnnualCostsPostImplementation = annualDomainMaintenanceCost + cactusAiAnnualCost + cloudCosts;
     const totalCostsYear1 = totalAnnualCostsPostImplementation + initialSetupCost;
@@ -91,7 +90,9 @@ export function calculateROI(inputData) {
       paybackPeriodMonths: formatNumber(paybackPeriodMonths),
       annualCostSpentPlacingTasks: formatCurrency(annualCostSpentPlacingTasks),
       annualCostSpentRepositioningSKUs: formatCurrency(annualCostSpentRepositioningSKUs),
-      cloudCosts: formatCurrency(cloudCosts)
+      cloudCosts: formatCurrency(cloudCosts),
+      cactusLicenseCost: formatCurrency(cactusLicenseCost * 12), // Add this line to show annual cost per store
+      totalHoursSavedPerDay: formatNumber(totalHoursSavedPerDay)
     };
 
   } catch (error) {

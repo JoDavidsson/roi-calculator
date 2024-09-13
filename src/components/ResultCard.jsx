@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/ResultCard.css';
 
-function ResultCard({ title, value, color, index, isMainCard = false, customClass = '', explanation }) {
+function ResultCard({ title, value, explanation, index, isMainCard = false }) {
   const [showTooltip, setShowTooltip] = useState(false);
 
   return (
@@ -10,8 +10,8 @@ function ResultCard({ title, value, color, index, isMainCard = false, customClas
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ scale: isMainCard ? 1.05 : 1.02 }}
-      className={`result-card ${color} ${isMainCard ? 'result-card-main' : 'result-card-secondary'} ${customClass}`}
+      whileHover={{ scale: 1.05 }}
+      className={`result-card ${isMainCard ? 'result-card-main' : 'result-card-secondary'}`}
       tabIndex={0}
       role="region"
       aria-label={title}

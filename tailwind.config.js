@@ -5,15 +5,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#111111',
-        secondary: '#FFFFFF',
-        accent: '#FD9D2E',
-        'text-dark': '#111111',
-        'text-light': '#FFFFFF',
+        primary: '#0D0D0D',    // Dark background
+        secondary: '#FFFFFF',  // Light background
+        accent: '#00FFFF',     // Neon cyan for accents
+        accentHover: '#00BFBF',// Slightly darker cyan for hover states
+        textLight: '#FFFFFF',  // Light text on dark backgrounds
+        textDark: '#0D0D0D',   // Dark text on light backgrounds
+        gray: {
+          100: '#F5F5F5',
+          200: '#E5E5E5',
+          300: '#D4D4D4',
+          800: '#333333',
+        },
       },
       fontFamily: {
-        sans: ['Roboto', 'sans-serif'],
-        heading: ['Roboto', 'sans-serif'],
+        sans: ['Montserrat', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
       },
       fontSize: {
         'h1': '48px',
@@ -22,12 +29,12 @@ module.exports = {
         'body': '16px',
       },
       spacing: {
-        'small': '8px',
-        'medium': '16px',
-        'large': '32px',
+        '72': '18rem',
+        '84': '21rem',
+        '96': '24rem',
       },
-      borderRadius: {
-        'default': '8px',
+      maxWidth: {
+        '7xl': '80rem',
       },
     },
   },

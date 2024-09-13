@@ -2,21 +2,41 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
 @layer base {
   body {
-    @apply bg-primary text-text-light font-sans;
+    @apply bg-primary text-textLight font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading text-text-light;
+    @apply font-heading text-textLight;
   }
 }
 
 @layer components {
   .container {
     @apply max-w-7xl mx-auto px-4;
+  }
+
+  .btn {
+    @apply font-bold py-2 px-4 rounded-full transition duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-primary hover:bg-accentHover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-accent text-accent hover:bg-accent hover:text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:ring-opacity-50;
+  }
+
+  .input {
+    @apply w-full px-3 py-2 bg-gray-800 text-textLight border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent;
+  }
+
+  .label {
+    @apply block text-textLight font-bold mb-2;
   }
 }
 
@@ -26,7 +46,6 @@
   }
 }
 
-/* Add this to the end of your index.css file */
 .consecutive-savings h5,
 .consecutive-savings p {
   @apply text-accent;

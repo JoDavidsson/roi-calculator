@@ -5,6 +5,7 @@ import InputForm from './InputForm';
 import Results from './Results';
 import Footer from './Footer';
 import { calculateROI } from '../utils/calculations';
+import { motion } from 'framer-motion';
 
 function App() {
   const [results, setResults] = useState(null);
@@ -28,21 +29,32 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="min-h-screen flex flex-col bg-primary text-textLight"
+    >
       <Header />
       <main className="flex-grow">
         <Hero />
         <InputForm onCalculate={handleCalculate} />
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-            <strong className="font-bold">Error: </strong>
-            <span className="block sm:inline">{error}</span>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="container mx-auto px-4 my-4"
+          >
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+            </div>
+          </motion.div>
         )}
         {results && <Results results={results} />}
       </main>
       <Footer />
-    </div>
+    </motion.div>
   );
 }
 

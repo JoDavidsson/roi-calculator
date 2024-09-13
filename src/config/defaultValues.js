@@ -11,6 +11,6 @@ export const defaultValues = {
   minutesSavedPerSkuSearch: 30,
   initialSetupCostPerStore: 1500,
   annualDomainMaintenancePerStore: 1000,
-  cactusAiMonthlyCostPerStore: 300,
+  cactusAiMonthlyCostPerStore: 300, // Default value
   cloudCostsPercentage: 0.1 // Make sure this is not 0
 };

@@ -1,20 +1,13 @@
 # ROI Calculator
 
-A React-based Return on Investment (ROI) calculator with a modern, responsive design using Tailwind CSS and Framer Motion for animations.
+This project is a React-based ROI (Return on Investment) calculator designed to help businesses estimate the potential savings and benefits of implementing the Cactus AI system.
 
 ## Features
 
-- Calculate ROI based on initial investment, annual investment, investment length, and estimated return
-- Responsive design for mobile and desktop
-- Animated UI elements for enhanced user experience
-- Modern and clean interface using Tailwind CSS
-
-## Technologies Used
-
-- React
-- Tailwind CSS
-- Framer Motion
-- Create React App
+- User-friendly interface for inputting business data
+- Detailed ROI calculations based on various factors
+- Responsive design for desktop and mobile devices
+- Interactive results display with explanations
 
 ## Getting Started
 
@@ -28,36 +21,41 @@ A React-based Return on Investment (ROI) calculator with a modern, responsive de
 1. Clone the repository:
    ```
    git clone https://github.com/your-username/roi-calculator.git
+   ```
+
+2. Navigate to the project directory:
+   ```
    cd roi-calculator
    ```
 
-2. Install dependencies:
+3. Install dependencies:
    ```
    npm install
    ```
 
-3. Start the development server:
+4. Start the development server:
    ```
    npm start
    ```
 
-4. Open your browser and visit `http://localhost:3000` to view the application.
+5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Usage
 
-1. Enter your investment details in the form:
-   - Initial Investment
-   - Annual Investment
-   - Investment Length (in years)
-   - Estimated Annual Return (as a percentage)
+1. Enter your business details in the input form.
+2. Click the "Calculate ROI" button.
+3. View the detailed results, including ROI, cost savings, and payback period.
 
-2. Click the "Calculate ROI" button to see the results.
+## Built With
 
-3. View the calculated results:
-   - Total Investment
-   - Total Return
-   - ROI (as a percentage)
+- React
+- Tailwind CSS
+- Framer Motion
 
-## Deployment
+## Contributing
 
-To build the project for production, run:
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License.

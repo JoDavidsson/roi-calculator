@@ -4,97 +4,46 @@ import { motion } from 'framer-motion';
 import '../styles/Results.css';
 
 function Results({ results }) {
-  const mainResults = [
-    { 
-      title: 'ROI Year One', 
-      value: results.roiYear1 || '0%', 
-      color: 'bg-accent text-text-dark',
-      explanation: 'Return on Investment for the first year, calculated as (Net Savings Year 1 / Total Investment Year 1) * 100'
+  console.log('Results data:', results);
+  const sections = [
+    {
+      title: 'Main Results',
+      items: [
+        { title: 'ROI Year One', value: results.roiYear1, explanation: 'Return on Investment for the first year' },
+        { title: 'Hours Saved per Store per Day', value: results.hoursSavedPerStorePerDay, explanation: 'Average labor hours saved per store daily' },
+        { title: 'Net Savings Subsequent Years', value: results.netSavingsSubsequentYears, explanation: 'Annual net savings after the first year' },
+      ],
     },
-    { 
-      title: 'Hours Saved per Store per Day', 
-      value: results.hoursSavedPerStorePerDay || '0', 
-      color: 'bg-primary text-text-light',
-      explanation: 'The average number of labor hours saved per store each day due to the implementation of Cactus AI'
+    {
+      title: 'Cost Savings',
+      items: [
+        { title: 'Annual Cost Savings', value: results.annualCostSavings, explanation: 'Total amount saved annually' },
+        { title: 'Net Savings Year 1', value: results.netSavingsYear1, explanation: 'Total savings in the first year' },
+      ],
     },
-    { 
-      title: 'Net Savings Subsequent Years', 
-      value: results.netSavingsSubsequentYears || '$0', 
-      color: 'bg-secondary text-accent', 
-      customClass: 'consecutive-savings',
-      explanation: 'The annual net savings expected in years following the first year of implementation'
+    {
+      title: 'Time Savings',
+      items: [
+        { title: 'Annual Labor Hours Saved', value: `${results.annualLaborHoursSaved} hours`, explanation: 'Total labor hours saved across all stores annually' },
+        { title: 'Total Hours Saved per Day', value: `${results.totalHoursSavedPerDay} hours`, explanation: 'Total labor hours saved across all stores daily' },
+      ],
     },
-  ];
-
-  const costSavings = [
-    { 
-      title: 'Annual Cost Savings', 
-      value: results.annualCostSavings || '$0', 
-      color: 'bg-green-100 text-green-800',
-      explanation: 'The total amount saved annually due to increased efficiency and reduced labor costs'
+    {
+      title: 'Costs',
+      items: [
+        { title: 'Total Pre-Implementation Costs', value: results.totalPreImplementationCosts, explanation: 'Annual costs before implementing Cactus AI' },
+        { title: 'Total Costs Year 1', value: results.totalCostsYear1, explanation: 'Total costs in the first year' },
+        { title: 'Annual Costs Post-Implementation', value: results.totalAnnualCostsPostImplementation, explanation: 'Ongoing annual costs after implementation' },
+        { title: 'Annual Cactus License Cost (per store)', value: results.cactusLicenseCost, explanation: 'Annual cost of Cactus AI license per store' },
+      ],
     },
-    { 
-      title: 'Net Savings Year 1', 
-      value: results.netSavingsYear1 || '$0', 
-      color: 'bg-green-200 text-green-800',
-      explanation: 'The total savings in the first year after subtracting implementation costs'
-    },
-  ];
-
-  const timeSavings = [
-    { 
-      title: 'Annual Labor Hours Saved', 
-      value: results.annualLaborHoursSaved || '0', 
-      color: 'bg-blue-100 text-blue-800',
-      explanation: 'The total number of labor hours saved across all stores in a year'
-    },
-    { 
-      title: 'Total Hours Saved per Day', 
-      value: results.totalHoursSavedPerDay || '0', 
-      color: 'bg-blue-200 text-blue-800',
-      explanation: 'The total number of labor hours saved across all stores in a single day'
-    },
-  ];
-
-  const costs = [
-    { 
-      title: 'Total Pre-Implementation Costs', 
-      value: results.totalPreImplementationCosts || '$0', 
-      color: 'bg-red-100 text-red-800',
-      explanation: 'The total annual costs before implementing Cactus AI'
-    },
-    { 
-      title: 'Total Costs Year 1', 
-      value: results.totalCostsYear1 || '$0', 
-      color: 'bg-red-200 text-red-800',
-      explanation: 'The total costs in the first year, including implementation and annual costs'
-    },
-    { 
-      title: 'Annual Costs Post-Implementation', 
-      value: results.totalAnnualCostsPostImplementation || '$0', 
-      color: 'bg-red-300 text-red-800',
-      explanation: 'The ongoing annual costs after implementing Cactus AI'
-    },
-  ];
-
-  const additionalMetrics = [
-    { 
-      title: 'ROI Subsequent Years', 
-      value: results.roiSubsequentYears || '0%', 
-      color: 'bg-purple-100 text-purple-800',
-      explanation: 'Return on Investment for years following the first year of implementation'
-    },
-    { 
-      title: 'Payback Period (Months)', 
-      value: results.paybackPeriodMonths || '0', 
-      color: 'bg-purple-200 text-purple-800',
-      explanation: 'The number of months it takes to recover the initial investment'
-    },
-    { 
-      title: 'Initial Setup Cost', 
-      value: results.initialSetupCost || '$0', 
-      color: 'bg-purple-300 text-purple-800',
-      explanation: 'The one-time cost to set up Cactus AI across all stores'
+    {
+      title: 'Additional Metrics',
+      items: [
+        { title: 'ROI Subsequent Years', value: results.roiSubsequentYears, explanation: 'Return on Investment for years after the first' },
+        { title: 'Payback Period (Months)', value: results.paybackPeriodMonths, explanation: 'Time to recover the initial investment' },
+        { title: 'Initial Setup Cost', value: results.initialSetupCost, explanation: 'One-time cost to set up Cactus AI' },
+      ],
     },
   ];
 
@@ -109,49 +58,29 @@ function Results({ results }) {
       <div className="results-container">
         <h3 className="results-title">Results</h3>
         
-        <div className="results-subsection">
-          <div className="results-grid">
-            {mainResults.map((result, index) => (
-              <ResultCard key={index} {...result} index={index} isMainCard={true} />
-            ))}
-          </div>
-        </div>
-
-        <div className="results-subsection">
-          <h4 className="results-subsection-title">Cost Savings</h4>
-          <div className="results-subsection-grid">
-            {costSavings.map((result, index) => (
-              <ResultCard key={index} {...result} index={index} />
-            ))}
-          </div>
-        </div>
-
-        <div className="results-subsection">
-          <h4 className="results-subsection-title">Time Savings</h4>
-          <div className="results-subsection-grid">
-            {timeSavings.map((result, index) => (
-              <ResultCard key={index} {...result} index={index} />
-            ))}
-          </div>
-        </div>
-
-        <div className="results-subsection">
-          <h4 className="results-subsection-title">Costs</h4>
-          <div className="results-subsection-grid-3">
-            {costs.map((result, index) => (
-              <ResultCard key={index} {...result} index={index} />
-            ))}
-          </div>
-        </div>
-
-        <div className="results-subsection">
-          <h4 className="results-subsection-title">Additional Metrics</h4>
-          <div className="results-subsection-grid-3">
-            {additionalMetrics.map((result, index) => (
-              <ResultCard key={index} {...result} index={index} />
-            ))}
-          </div>
-        </div>
+        {sections.map((section, sectionIndex) => (
+          <motion.div 
+            key={section.title}
+            className="results-subsection"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: sectionIndex * 0.1 }}
+          >
+            <h4 className="results-subsection-title">{section.title}</h4>
+            <div className={`results-grid ${section.title === 'Main Results' ? 'md:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-3'}`}>
+              {section.items.map((item, index) => (
+                <ResultCard 
+                  key={item.title}
+                  title={item.title}
+                  value={item.value}
+                  explanation={item.explanation}
+                  index={index}
+                  isMainCard={section.title === 'Main Results'}
+                />
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </div>
     </motion.section>
   );
