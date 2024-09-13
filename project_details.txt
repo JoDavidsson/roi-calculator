@@ -1,0 +1,680 @@
+**Understood! As a highly coveted UX/UI designer, I will help you redesign your ROI calculator website to match the style and aesthetics of the Aukilabs Cactus product page you provided. I'll guide you through capturing the necessary elements and incorporating them into your React application, ensuring that the final product is both visually appealing and functionally excellent.**
+
+---
+
+## **1. Analyzing the Reference Website**
+
+To align your ROI calculator with the style of [Aukilabs Cactus Product Page](https://www.aukilabs.com/solutions/software/cactus/product), let's first identify key design elements:
+
+- **Color Scheme**: A modern palette with dominant use of dark backgrounds, accented by vibrant colors like neon green, blue, or purple.
+- **Typography**: Clean, sans-serif fonts with varying weights to emphasize hierarchy.
+- **Layout**: Full-width sections with ample white space, using grids and cards to organize content.
+- **Imagery**: Use of high-quality images, icons, and subtle animations to enhance engagement.
+- **Interactivity**: Smooth transitions, hover effects, and responsive elements that adapt to different screen sizes.
+- **Navigation**: A sticky header with clear navigation links and a prominent call-to-action (CTA) button.
+
+---
+
+## **2. Adapting the Design Elements**
+
+### **Color Palette**
+
+- **Background**: Dark shades (e.g., #121212 or #1A1A1A).
+- **Primary Accent**: Vibrant colors (e.g., neon green #00FF99).
+- **Text Colors**: Light colors for text on dark backgrounds (e.g., #FFFFFF for headings, #CCCCCC for body text).
+
+### **Typography**
+
+- **Font Family**: Use a clean sans-serif font like "Roboto", "Open Sans", or "Helvetica Neue".
+- **Font Weights**:
+  - Headings: Bold or Extra Bold.
+  - Body Text: Regular.
+- **Font Sizes**: Adjust sizes for hierarchy (e.g., H1: 48px, H2: 36px, H3: 24px, Body: 16px).
+
+### **Layout and Components**
+
+- **Header**: Sticky header with logo on the left and navigation links on the right.
+- **Hero Section**: A compelling headline with a brief description and a CTA button.
+- **Input Form**: Modern form elements with floating labels and focus animations.
+- **Results Section**: Use cards or panels with icons and numerical data emphasized.
+- **Footer**: Dark background with links and social media icons.
+
+### **Imagery and Icons**
+
+- **Icons**: Use vector icons for clarity (e.g., from Font Awesome or Material Icons).
+- **Images**: Incorporate relevant, high-resolution images or illustrations.
+- **Animations**: Subtle animations on scroll or interaction (e.g., fade-ins, slide-ups).
+
+### **Interactivity**
+
+- **Hover Effects**: Change button colors or card shadows on hover.
+- **Responsive Design**: Ensure the layout adjusts smoothly across devices.
+- **Transitions**: Use CSS transitions for smooth state changes.
+
+---
+
+## **3. Implementing the Design in React**
+
+### **File Structure**
+
+We'll adjust the file structure to accommodate the new components and styles:
+
+```
+src/
+│
+├── components/
+│   ├── App.jsx
+│   ├── Header.jsx
+│   ├── Hero.jsx
+│   ├── InputForm.jsx
+│   ├── Results.jsx
+│   ├── ResultCard.jsx
+│   ├── Footer.jsx
+│   ├── Navigation.jsx
+│   └── CTAButton.jsx
+│
+├── styles/
+│   ├── variables.css
+│   ├── global.css
+│   ├── Header.css
+│   ├── Hero.css
+│   ├── InputForm.css
+│   ├── Results.css
+│   ├── ResultCard.css
+│   ├── Footer.css
+│   └── Responsive.css
+│
+├── assets/
+│   ├── images/
+│   │   └── background.jpg
+│   └── icons/
+│       └── ...
+│
+├── utils/
+│   ├── calculations.js
+│   └── validation.js
+│
+├── App.js
+├── index.js
+└── index.html
+```
+
+### **3.1. Define CSS Variables**
+
+**File:** `src/styles/variables.css`
+
+```css
+:root {
+  /* Color Palette */
+  --background-color: #121212;
+  --primary-color: #00FF99;
+  --secondary-color: #1A1A1A;
+  --text-color: #FFFFFF;
+  --muted-text-color: #CCCCCC;
+
+  /* Font Sizes */
+  --font-size-h1: 48px;
+  --font-size-h2: 36px;
+  --font-size-h3: 24px;
+  --font-size-body: 16px;
+
+  /* Spacing */
+  --spacing-small: 8px;
+  --spacing-medium: 16px;
+  --spacing-large: 32px;
+
+  /* Other */
+  --border-radius: 8px;
+}
+```
+
+### **3.2. Global Styles**
+
+**File:** `src/styles/global.css`
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-color);
+  margin: 0;
+}
+
+p {
+  color: var(--muted-text-color);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+```
+
+### **3.3. Header Component**
+
+**File:** `src/components/Header.jsx`
+
+```jsx
+import React from 'react';
+import './Header.css';
+import logo from '../assets/images/logo.png';
+import Navigation from './Navigation';
+
+function Header() {
+  return (
+    <header className="header">
+      <div className="header-container">
+        <a href="/">
+          <img src={logo} alt="Cactus AI Logo" className="logo" />
+        </a>
+        <Navigation />
+      </div>
+    </header>
+  );
+}
+
+export default Header;
+```
+
+**File:** `src/components/Navigation.jsx`
+
+```jsx
+import React from 'react';
+import './Navigation.css';
+
+function Navigation() {
+  return (
+    <nav className="navigation">
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><button className="cta-button">Get Started</button></li>
+      </ul>
+    </nav>
+  );
+}
+
+export default Navigation;
+```
+
+**File:** `src/styles/Header.css`
+
+```css
+.header {
+  position: fixed;
+  width: 100%;
+  background-color: var(--secondary-color);
+  padding: var(--spacing-medium) 0;
+  z-index: 1000;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-large);
+}
+
+.logo {
+  width: 150px;
+}
+```
+
+**File:** `src/styles/Navigation.css`
+
+```css
+.navigation ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.navigation li {
+  margin-left: var(--spacing-large);
+}
+
+.navigation a {
+  color: var(--text-color);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.navigation a:hover {
+  color: var(--primary-color);
+}
+
+.cta-button {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+  background-color: #00e68a;
+}
+```
+
+### **3.4. Hero Section**
+
+**File:** `src/components/Hero.jsx`
+
+```jsx
+import React from 'react';
+import './Hero.css';
+
+function Hero() {
+  return (
+    <section className="hero" id="calculator">
+      <div className="hero-content">
+        <h1>Discover Your ROI with Cactus AI</h1>
+        <p>Unlock the potential of AI-driven solutions for your retail business.</p>
+        <button className="cta-button">Calculate Now</button>
+      </div>
+    </section>
+  );
+}
+
+export default Hero;
+```
+
+**File:** `src/styles/Hero.css`
+
+```css
+.hero {
+  background: url('../assets/images/background.jpg') no-repeat center center/cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-large);
+}
+
+.hero h1 {
+  font-size: var(--font-size-h1);
+  margin-bottom: var(--spacing-medium);
+}
+
+.hero p {
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-large);
+}
+```
+
+### **3.5. Input Form with Styled Components**
+
+We'll use modern input styles with floating labels.
+
+**File:** `src/components/InputForm.jsx`
+
+```jsx
+import React from 'react';
+import './InputForm.css';
+
+function InputForm({ initialData, onSubmit }) {
+  // ...same as before but with updated classes
+}
+
+export default InputForm;
+```
+
+**File:** `src/styles/InputForm.css`
+
+```css
+.input-form {
+  background-color: var(--secondary-color);
+  padding: var(--spacing-large);
+  border-radius: var(--border-radius);
+  max-width: 800px;
+  margin: -100px auto 0 auto; /* Overlap with hero section */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: var(--spacing-medium);
+}
+
+.input-group input {
+  width: 100%;
+  padding: var(--spacing-small) var(--spacing-small) var(--spacing-small) 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--muted-text-color);
+  color: var(--text-color);
+  font-size: var(--font-size-body);
+}
+
+.input-group label {
+  position: absolute;
+  top: var(--spacing-small);
+  left: 0;
+  font-size: var(--font-size-body);
+  color: var(--muted-text-color);
+  transition: all 0.2s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-bottom: 1px solid var(--primary-color);
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -20px;
+  font-size: 0.75rem;
+  color: var(--primary-color);
+}
+
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  padding: var(--spacing-small) var(--spacing-medium);
+  border: none;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  font-size: var(--font-size-body);
+  width: 100%;
+  margin-top: var(--spacing-medium);
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #00e68a;
+}
+```
+
+### **3.6. Results Section**
+
+Present results using cards with icons.
+
+**File:** `src/components/Results.jsx`
+
+```jsx
+import React from 'react';
+import './Results.css';
+import ResultCard from './ResultCard';
+
+function Results({ data }) {
+  return (
+    <section className="results">
+      <h2>Your ROI Results</h2>
+      <div className="results-grid">
+        <ResultCard
+          icon="savings"
+          title="Net Savings Year 1"
+          value={data.netSavingsYear1}
+        />
+        <ResultCard
+          icon="trending_up"
+          title="ROI Year 1"
+          value={data.roiYear1}
+        />
+        {/* Add more cards as needed */}
+      </div>
+    </section>
+  );
+}
+
+export default Results;
+```
+
+**File:** `src/components/ResultCard.jsx`
+
+```jsx
+import React from 'react';
+import './ResultCard.css';
+
+function ResultCard({ icon, title, value }) {
+  return (
+    <div className="result-card">
+      <div className="icon">
+        <span className="material-icons">{icon}</span>
+      </div>
+      <h3>{title}</h3>
+      <p>{value}</p>
+    </div>
+  );
+}
+
+export default ResultCard;
+```
+
+**File:** `src/styles/Results.css`
+
+```css
+.results {
+  padding: var(--spacing-large) var(--spacing-large) var(--spacing-large) var(--spacing-large);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.results h2 {
+  text-align: center;
+  font-size: var(--font-size-h2);
+  margin-bottom: var(--spacing-large);
+}
+
+.results-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+```
+
+**File:** `src/styles/ResultCard.css`
+
+```css
+.result-card {
+  background-color: var(--secondary-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-medium);
+  margin: var(--spacing-small);
+  width: 250px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.result-card:hover {
+  transform: translateY(-10px);
+}
+
+.result-card .icon {
+  font-size: 48px;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-small);
+}
+
+.result-card h3 {
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--spacing-small);
+}
+
+.result-card p {
+  font-size: var(--font-size-body);
+  font-weight: 700;
+}
+```
+
+### **3.7. Footer**
+
+**File:** `src/components/Footer.jsx`
+
+```jsx
+import React from 'react';
+import './Footer.css';
+
+function Footer() {
+  return (
+    <footer className="footer" id="contact">
+      <div className="footer-content">
+        <p>&copy; {new Date().getFullYear()} Cactus AI. All rights reserved.</p>
+        <div className="social-media">
+          <a href="#"><i className="fab fa-facebook-f"></i></a>
+          <!-- Add other social icons -->
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+export default Footer;
+```
+
+**File:** `src/styles/Footer.css`
+
+```css
+.footer {
+  background-color: var(--secondary-color);
+  color: var(--muted-text-color);
+  padding: var(--spacing-large) var(--spacing-large);
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.social-media a {
+  color: var(--muted-text-color);
+  margin: 0 var(--spacing-small);
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.social-media a:hover {
+  color: var(--primary-color);
+}
+```
+
+### **3.8. Responsive Design**
+
+**File:** `src/styles/Responsive.css`
+
+```css
+/* Mobile Styles */
+@media only screen and (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+  }
+
+  .navigation ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navigation li {
+    margin-left: 0;
+    margin-top: var(--spacing-medium);
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .results-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .result-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+```
+
+### **3.9. Update Main App Component**
+
+**File:** `src/components/App.jsx`
+
+```jsx
+import React from 'react';
+import Header from './Header';
+import Hero from './Hero';
+import InputForm from './InputForm';
+import Results from './Results';
+import Footer from './Footer';
+import './App.css';
+import '../styles/global.css';
+
+function App() {
+  // ...same logic as before
+  return (
+    <>
+      <Header />
+      <Hero />
+      <main>
+        <InputForm initialData={formData} onSubmit={handleFormSubmit} />
+        {results && <Results data={results} />}
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+export default App;
+```
+
+---
+
+## **4. Instructions for Cursor AI**
+
+**Cursor AI**, please implement the React application according to the above guidance:
+
+- **Components**: Build each component as described, ensuring proper structure and styling.
+- **Styles**: Use CSS files provided, ensuring variables and global styles are applied.
+- **Assets**: Use placeholder images and icons where necessary, ensuring they align with the design.
+- **Responsive Design**: Implement the `Responsive.css` to ensure the application looks good on all devices.
+- **Functionality**: Ensure that the calculations are correctly implemented and that the results update based on user input.
+- **Interactivity**: Add hover effects, transitions, and any other interactive elements to enhance the user experience.
+- **Accessibility**: Ensure all elements are accessible, with appropriate ARIA labels and keyboard navigation support.
+- **Testing**: Test the application across different browsers and devices to ensure consistent performance.
+
+---
+
+## **5. Additional Enhancements**
+
+- **Animations**: Use libraries like `Framer Motion` or CSS animations for subtle animations.
+- **Form Validation**: Enhance form validation with real-time feedback.
+- **SEO Optimization**: Add meta tags and structured data to improve search engine visibility.
+- **Analytics**: Integrate analytics tools to track user interactions.
+
+---
+
+## **6. Conclusion**
+
+By integrating the design elements from the Aukilabs Cactus product page, your ROI calculator will not only be functionally robust but also visually compelling. This alignment with the existing brand aesthetics ensures a cohesive user experience that resonates with your audience.
+
+**If you need further assistance or have any questions, feel free to ask!**
