@@ -15,11 +15,16 @@ function InputForm({ onCalculate }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCalculate({
-      numStores: parseFloat(formData.numStores),
-      numEmployees: parseFloat(formData.numEmployees),
-      hourlySalary: parseFloat(formData.hourlySalary)
-    });
+    const numStores = parseFloat(formData.numStores);
+    const numEmployees = parseFloat(formData.numEmployees);
+    const hourlySalary = parseFloat(formData.hourlySalary);
+
+    if (numStores <= 0 || numEmployees <= 0 || hourlySalary <= 0) {
+      alert("All input values must be greater than zero.");
+      return;
+    }
+
+    onCalculate({ numStores, numEmployees, hourlySalary });
   };
 
   return (

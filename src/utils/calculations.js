@@ -1,6 +1,5 @@
 import { defaultValues } from '../config/defaultValues';
 
-// Helper function to format currency
 const formatCurrency = (value) => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -10,82 +9,95 @@ const formatCurrency = (value) => {
   }).format(value);
 };
 
+const formatPercentage = (value) => {
+  return `${value.toFixed(0)}%`;
+};
+
+const formatNumber = (value) => {
+  return value.toFixed(1);
+};
+
 export function calculateROI(inputData) {
-  const { numStores, numEmployees, hourlySalary } = inputData;
-  const {
-    tasksPerStore,
-    timePerTaskPlacement,
-    timeSavedPerTask,
-    skusPerStore,
-    timePerSkuRelocation,
-    timeSavedSearchingPerEmployee,
-    timeSavedPerHandover,
-    hoursPerShift,
-    daysPerYear,
-    cactusAiCostPerStorePerMonth,
-    domainSetupCostPerStore,
-    domainMaintenancePerStorePerYear
-  } = defaultValues;
+  try {
+    const { numStores, numEmployees, hourlySalary } = inputData;
+    
+    if (!numStores || !numEmployees || !hourlySalary) {
+      throw new Error('Invalid input data: All fields are required');
+    }
 
-  // Staff Costs
-  const staffCostsPerDay = numStores * numEmployees * hoursPerShift * hourlySalary;
-  const staffCostsPerYear = staffCostsPerDay * daysPerYear;
+    if (numStores <= 0 || numEmployees <= 0 || hourlySalary <= 0) {
+      throw new Error('Invalid input data: All values must be positive');
+    }
 
-  // Task Placement Costs
-  const taskPlacementTimePerDay = (tasksPerStore * timePerTaskPlacement * numStores) / 60; // in hours
-  const taskPlacementCostPerDay = taskPlacementTimePerDay * hourlySalary;
-  const taskPlacementCostPerYear = taskPlacementCostPerDay * daysPerYear;
+    const {
+      daysPerYear,
+      minutesPerHour,
+      tasksPerStorePerDay,
+      minutesPerTaskPlacement,
+      skusPerStorePerDay,
+      minutesPerSkuRepositioning,
+      minutesSavedPerTask,
+      minutesSavedPerHandover,
+      minutesSavedPerSkuSearch,
+      initialSetupCostPerStore,
+      annualDomainMaintenancePerStore,
+      cactusAiMonthlyCostPerStore,
+      cloudCostsPercentage
+    } = defaultValues;
 
-  // SKU Repositioning Costs
-  const skuRepositioningTimePerDay = (skusPerStore * timePerSkuRelocation * numStores) / 60; // in hours
-  const skuRepositioningCostPerDay = skuRepositioningTimePerDay * hourlySalary;
-  const skuRepositioningCostPerYear = skuRepositioningCostPerDay * daysPerYear;
+    // Pre-Implementation Costs (Current Operational Costs)
+    const annualCostSpentPlacingTasks = (tasksPerStorePerDay * minutesPerTaskPlacement / minutesPerHour) * hourlySalary * numStores * daysPerYear;
+    const annualCostSpentRepositioningSKUs = (skusPerStorePerDay * minutesPerSkuRepositioning / minutesPerHour) * hourlySalary * numStores * daysPerYear;
+    const totalPreImplementationCosts = annualCostSpentPlacingTasks + annualCostSpentRepositioningSKUs;
 
-  // Time Savings
-  const timeSavedPerDay = (
-    (tasksPerStore * timeSavedPerTask) +
-    (timeSavedSearchingPerEmployee * numEmployees) +
-    (timeSavedPerHandover * numEmployees)
-  ) * numStores / 60; // in hours
+    // Post-Implementation Costs
+    const initialSetupCost = initialSetupCostPerStore * numStores;
+    const annualDomainMaintenanceCost = annualDomainMaintenancePerStore * numStores;
+    const cactusAiAnnualCost = cactusAiMonthlyCostPerStore * 12 * numStores;
+    const cloudCosts = cactusAiAnnualCost * cloudCostsPercentage;
+    const totalAnnualCostsPostImplementation = annualDomainMaintenanceCost + cactusAiAnnualCost + cloudCosts;
+    const totalCostsYear1 = totalAnnualCostsPostImplementation + initialSetupCost;
 
-  // Cost Savings
-  const costSavingsPerDay = timeSavedPerDay * hourlySalary;
-  const costSavingsPerYear = costSavingsPerDay * daysPerYear;
+    // Time and Cost Savings
+    const totalMinutesSavedPerStorePerDay = (tasksPerStorePerDay * minutesSavedPerTask) + (numEmployees * minutesSavedPerHandover) + (numEmployees * minutesSavedPerSkuSearch);
+    const hoursSavedPerStorePerDay = totalMinutesSavedPerStorePerDay / minutesPerHour;
+    const totalHoursSavedPerDay = hoursSavedPerStorePerDay * numStores;
+    const annualLaborHoursSaved = totalHoursSavedPerDay * daysPerYear;
+    const annualCostSavings = annualLaborHoursSaved * hourlySalary;
 
-  // Cactus AI Costs
-  const cactusAiCostPerYear = cactusAiCostPerStorePerMonth * numStores * 12;
-  const domainSetupCost = domainSetupCostPerStore * numStores;
-  const domainMaintenanceCost = domainMaintenancePerStorePerYear * numStores;
-  
-  // Calculate cloud costs as 10% of Cactus license
-  const cloudCostsPerYear = cactusAiCostPerYear * 0.1;
-  
-  const totalCostsYear1 = cactusAiCostPerYear + domainSetupCost + domainMaintenanceCost + cloudCostsPerYear;
-  const totalCostsSubsequentYears = totalCostsYear1 - domainSetupCost;
+    // Net Savings
+    const netSavingsYear1 = annualCostSavings - totalCostsYear1;
+    const netSavingsSubsequentYears = annualCostSavings - totalAnnualCostsPostImplementation;
 
-  // ROI Calculations
-  const netSavingsYear1 = costSavingsPerYear - totalCostsYear1;
-  const netSavingsSubsequentYears = costSavingsPerYear - totalCostsSubsequentYears;
-  const roiYear1 = (netSavingsYear1 / totalCostsYear1) * 100;
-  const roiSubsequentYears = (netSavingsSubsequentYears / totalCostsSubsequentYears) * 100;
+    // ROI Calculations
+    const roiYear1 = (netSavingsYear1 / totalCostsYear1) * 100;
+    const roiSubsequentYears = (netSavingsSubsequentYears / totalAnnualCostsPostImplementation) * 100;
 
-  // New calculations
-  const hoursSavedPerStore = timeSavedPerDay / numStores;
-  const consecutiveSavings = netSavingsSubsequentYears;
+    // Payback Period
+    const paybackPeriodMonths = (totalCostsYear1 / netSavingsSubsequentYears) * 12;
 
-  return {
-    staffCostsPerYear: formatCurrency(staffCostsPerYear),
-    taskPlacementCostPerYear: formatCurrency(taskPlacementCostPerYear),
-    skuRepositioningCostPerYear: formatCurrency(skuRepositioningCostPerYear),
-    costSavingsPerYear: formatCurrency(costSavingsPerYear),
-    totalCostsYear1: formatCurrency(totalCostsYear1),
-    totalCostsSubsequentYears: formatCurrency(totalCostsSubsequentYears),
-    netSavingsYear1: formatCurrency(netSavingsYear1),
-    netSavingsSubsequentYears: formatCurrency(netSavingsSubsequentYears),
-    roiYear1: `${roiYear1.toFixed(0)}%`,
-    roiSubsequentYears: `${roiSubsequentYears.toFixed(0)}%`,
-    hoursSavedPerStore: hoursSavedPerStore.toFixed(1),
-    consecutiveSavings: formatCurrency(consecutiveSavings),
-    cloudCostsPerYear: formatCurrency(cloudCostsPerYear)
-  };
+    return {
+      totalPreImplementationCosts: formatCurrency(totalPreImplementationCosts),
+      initialSetupCost: formatCurrency(initialSetupCost),
+      totalAnnualCostsPostImplementation: formatCurrency(totalAnnualCostsPostImplementation),
+      totalCostsYear1: formatCurrency(totalCostsYear1),
+      hoursSavedPerStorePerDay: formatNumber(hoursSavedPerStorePerDay),
+      annualLaborHoursSaved: formatNumber(annualLaborHoursSaved),
+      annualCostSavings: formatCurrency(annualCostSavings),
+      netSavingsYear1: formatCurrency(netSavingsYear1),
+      netSavingsSubsequentYears: formatCurrency(netSavingsSubsequentYears),
+      roiYear1: formatPercentage(roiYear1),
+      roiSubsequentYears: formatPercentage(roiSubsequentYears),
+      paybackPeriodMonths: formatNumber(paybackPeriodMonths),
+      annualCostSpentPlacingTasks: formatCurrency(annualCostSpentPlacingTasks),
+      annualCostSpentRepositioningSKUs: formatCurrency(annualCostSpentRepositioningSKUs),
+      cloudCosts: formatCurrency(cloudCosts)
+    };
+
+  } catch (error) {
+    console.error('Error in ROI calculation:', error);
+    return {
+      error: error.message
+    };
+  }
 }

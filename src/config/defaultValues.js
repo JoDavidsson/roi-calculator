@@ -1,15 +1,16 @@
 export const defaultValues = {
-  tasksPerStore: 30,
-  timePerTaskPlacement: 0.5,
-  timeSavedPerTask: 1,
-  skusPerStore: 100,
-  timePerSkuRelocation: 0.2,
-  timeSavedSearchingPerEmployee: 30,
-  timeSavedPerHandover: 15,
-  hoursPerShift: 8,
   daysPerYear: 365,
-  cactusAiCostPerStorePerMonth: 300,
-  domainSetupCostPerStore: 1500,
-  domainMaintenancePerStorePerYear: 1000,
-  cloudCostsPerYear: 468000
+  minutesPerHour: 60,
+  hoursPerShift: 8,
+  tasksPerStorePerDay: 30,
+  minutesPerTaskPlacement: 0.5,
+  skusPerStorePerDay: 100,
+  minutesPerSkuRepositioning: 0.2,
+  minutesSavedPerTask: 1,
+  minutesSavedPerHandover: 15,
+  minutesSavedPerSkuSearch: 30,
+  initialSetupCostPerStore: 1500,
+  annualDomainMaintenancePerStore: 1000,
+  cactusAiMonthlyCostPerStore: 300,
+  cloudCostsPercentage: 0.1 // Make sure this is not 0
 };

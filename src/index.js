@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles/index.css';
+import './styles/Results.css';
+import './styles/ResultCard.css';  // Add this line
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 

@@ -1,0 +1,31 @@
+.results-section {
+  @apply py-12 md:py-16 bg-secondary;
+}
+
+.results-container {
+  @apply container mx-auto px-4;
+}
+
+.results-title {
+  @apply text-2xl md:text-3xl font-bold mb-8 md:mb-10 text-center text-text-dark;
+}
+
+.results-grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8;
+}
+
+.results-subsection {
+  @apply mb-12;
+}
+
+.results-subsection-title {
+  @apply text-xl md:text-2xl font-bold mb-4 text-text-dark;
+}
+
+.results-subsection-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8;
+}
+
+.results-subsection-grid-3 {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8;
+}
